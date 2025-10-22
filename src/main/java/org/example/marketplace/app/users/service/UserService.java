@@ -1,14 +1,16 @@
-package org.example.marketplace.app.users;
+package org.example.marketplace.app.users.service;
 
 import lombok.RequiredArgsConstructor;
-import org.example.marketplace.app.users.DTO.UserCreateRequest;
-import org.example.marketplace.app.users.DTO.UserFullInfo;
-import org.example.marketplace.app.users.DTO.UserPatchRequest;
+import org.example.marketplace.app.users.dto.UserCreateRequest;
+import org.example.marketplace.app.users.dto.UserFullInfo;
+import org.example.marketplace.app.users.dto.UserPatchRequest;
 import org.example.marketplace.app.users.exception.UserException;
 import org.example.marketplace.app.users.mapper.UserMapper;
 import org.example.marketplace.app.users.model.UserEntity;
-import org.example.marketplace.common.DTO.PaginatedResponse;
+import org.example.marketplace.app.users.repository.UserRepository;
+import org.example.marketplace.common.dto.PaginatedResponse;
 import org.example.marketplace.common.exception.ApiException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,12 +20,14 @@ import java.util.List;
 public class UserService {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserFullInfo createUser(UserCreateRequest request) {
+    public UserFullInfo register(UserCreateRequest request) {
         if (userRepository.existsByEmailIgnoreCase(request.email()))
             throw new ApiException(UserException.email_already_exists);
 
         UserEntity entity = userMapper.toUserEntity(request);
+        entity.setPasswordHash(passwordEncoder.encode(request.password()));
         userRepository.save(entity);
         return userMapper.toFullInfo(entity);
 

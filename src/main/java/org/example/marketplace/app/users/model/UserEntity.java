@@ -5,7 +5,7 @@ import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 @Entity
 @Table(name = "users")
@@ -22,6 +22,10 @@ public class UserEntity {
     private String email;
 
     @Setter
+    @Column(name = "password_hash", nullable = false)
+    private String passwordHash;
+
+    @Setter
     @Column(nullable = false)
     private String name;
 
@@ -30,13 +34,17 @@ public class UserEntity {
     @Column(nullable = false)
     private UserRole role;
 
+    @Setter
+    @Column(name = "is_active", nullable = false)
+    private Boolean isActive = true;
+
     @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)
-    private LocalDateTime createdAt;
+    private Instant createdAt;
 
     @UpdateTimestamp
     @Column(name = "updated_at", nullable = false)
-    private LocalDateTime updatedAt;
+    private Instant updatedAt;
 
     public UserEntity(String email, String name, UserRole role) {
         this.email = email;

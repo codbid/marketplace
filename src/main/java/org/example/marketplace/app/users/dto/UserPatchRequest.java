@@ -1,4 +1,4 @@
-package org.example.marketplace.app.users.DTO;
+package org.example.marketplace.app.users.dto;
 
 import jakarta.validation.constraints.Email;
 import lombok.Data;

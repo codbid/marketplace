@@ -1,4 +1,4 @@
-package org.example.marketplace.common.DTO;
+package org.example.marketplace.common.dto;
 
 import java.util.List;
 

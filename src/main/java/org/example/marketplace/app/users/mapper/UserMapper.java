@@ -1,7 +1,7 @@
 package org.example.marketplace.app.users.mapper;
 
-import org.example.marketplace.app.users.DTO.UserCreateRequest;
-import org.example.marketplace.app.users.DTO.UserFullInfo;
+import org.example.marketplace.app.users.dto.UserCreateRequest;
+import org.example.marketplace.app.users.dto.UserFullInfo;
 import org.example.marketplace.app.users.model.UserEntity;
 import org.springframework.stereotype.Component;
 

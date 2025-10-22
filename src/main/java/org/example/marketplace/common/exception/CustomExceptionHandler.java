@@ -35,14 +35,4 @@ public class CustomExceptionHandler {
         ));
     }
 
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<Map<String, Object>> handleOtherException(Exception exception) {
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of(
-                "timestamp", Instant.now(),
-                "status", HttpStatus.INTERNAL_SERVER_ERROR.value(),
-                "error", HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase(),
-                "message", exception.getMessage()
-
-        ));
-    }
 }
