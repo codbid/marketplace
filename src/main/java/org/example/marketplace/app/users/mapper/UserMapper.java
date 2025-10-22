@@ -21,8 +21,7 @@ public class UserMapper {
     public UserEntity toUserEntity(UserCreateRequest request) {
         return new UserEntity(
                 request.email(),
-                request.name(),
-                request.role()
+                request.name()
         );
     }
 }

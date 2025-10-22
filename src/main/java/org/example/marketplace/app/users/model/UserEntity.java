@@ -8,10 +8,10 @@ import org.hibernate.annotations.UpdateTimestamp;
 import java.time.Instant;
 
 @Entity
-@Table(name = "users")
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-@EqualsAndHashCode(of = "id")
 @Getter
+@Table(name = "users")
+@EqualsAndHashCode(of = "id")
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class UserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,7 +32,7 @@ public class UserEntity {
     @Setter
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private UserRole role;
+    private UserRole role = UserRole.USER;
 
     @Setter
     @Column(name = "is_active", nullable = false)
@@ -46,9 +46,14 @@ public class UserEntity {
     @Column(name = "updated_at", nullable = false)
     private Instant updatedAt;
 
-    public UserEntity(String email, String name, UserRole role) {
+    @Column(nullable = false)
+    private Boolean verified = false;
+
+    @Column(name = "verified_at")
+    private Instant verifiedAt;
+
+    public UserEntity(String email, String name) {
         this.email = email;
         this.name = name;
-        this.role = role;
     }
 }

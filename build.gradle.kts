@@ -33,6 +33,7 @@ dependencies {
     implementation("org.flywaydb:flyway-core")
     implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.13")
     implementation("io.jsonwebtoken:jjwt-api:0.13.0")
+    implementation("com.github.slugify:slugify:3.0.7")
 
 
     runtimeOnly("org.postgresql:postgresql")

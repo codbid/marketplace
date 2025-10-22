@@ -12,8 +12,11 @@ import java.util.Optional;
 @Repository
 public interface UserRepository extends JpaRepository<UserEntity, Long> {
     boolean existsByEmailIgnoreCase(String email);
+
     Optional<UserEntity> findByEmailIgnoreCase(String email);
 
     @Query(value = "SELECT * FROM users ORDER BY id LIMIT :limit OFFSET :offset", nativeQuery = true)
     List<UserEntity> findAllPaginated(@Param("limit") int limit, @Param("offset") int offset);
+
+    Optional<UserEntity> findByIdAndIsActiveIsTrue(Long id);
 }
