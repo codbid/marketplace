@@ -41,6 +41,13 @@ public class AccessService {
         return seller.getOwner().getId().equals(principal.getId());
     }
 
+    private boolean hasSellerStaffAccess(Long sellerId, UserPrincipal principal) {
+        SellerEntity seller = sellerRepository.findAvailableForStaffById(sellerId)
+                .orElseThrow(() -> new ApiException(SellerException.seller_not_found));
+
+        return seller.getStaff().stream().anyMatch(entity -> entity.getUser().getId().equals(principal.getId()));
+    }
+
     /**
      * Validation-layout
      */
@@ -52,6 +59,14 @@ public class AccessService {
     public void requireVerification(UserPrincipal principal) {
         if (!haveVerification(principal))
             throw new ApiException(AccessException.user_not_verified);
+    }
+
+    public void requireSellerStaffAccess(Long sellerId, UserPrincipal principal) {
+        if (haveSellerOwnerAccess(sellerId, principal))
+            return;
+        if (hasSellerStaffAccess(sellerId, principal))
+            return;
+        throw new ApiException(AccessException.forbidden);
     }
 
 

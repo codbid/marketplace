@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface SellerStaffRepository extends JpaRepository<SellerStaffEntity, Long> {
     boolean existsBySellerIdAndUserId(Long sellerId, Long userId);
@@ -17,4 +18,6 @@ public interface SellerStaffRepository extends JpaRepository<SellerStaffEntity, 
         and u.isActive = true
     """)
     List<SellerStaffEntity> findAllActiveStaffBySellerId(Long sellerId);
+
+    Optional<SellerStaffEntity> findBySellerIdAndUserId(Long sellerId, Long userId);
 }

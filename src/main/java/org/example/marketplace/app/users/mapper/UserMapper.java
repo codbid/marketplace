@@ -2,6 +2,7 @@ package org.example.marketplace.app.users.mapper;
 
 import org.example.marketplace.app.users.dto.UserCreateRequest;
 import org.example.marketplace.app.users.dto.UserFullInfo;
+import org.example.marketplace.app.users.dto.UserShortInfo;
 import org.example.marketplace.app.users.model.UserEntity;
 import org.springframework.stereotype.Component;
 
@@ -22,6 +23,13 @@ public class UserMapper {
         return new UserEntity(
                 request.email(),
                 request.name()
+        );
+    }
+
+    public UserShortInfo toShortInfo(UserEntity entity) {
+        return new UserShortInfo(
+                entity.getId(),
+                entity.getName()
         );
     }
 }

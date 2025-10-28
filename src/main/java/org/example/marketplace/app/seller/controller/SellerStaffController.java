@@ -5,6 +5,7 @@ import org.example.marketplace.app.access.service.AccessService;
 import org.example.marketplace.app.auth.security.UserPrincipal;
 import org.example.marketplace.app.seller.service.SellerStaffService;
 import org.example.marketplace.app.seller.staff.dto.EmployeeUserInfo;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +22,7 @@ public class SellerStaffController {
     private final AccessService accessService;
 
     @PostMapping("/user/{userId}") // OWNER
-    public EmployeeUserInfo employeeUser(@PathVariable Long sellerId,
+    public EmployeeUserInfo employeeStaff(@PathVariable Long sellerId,
                                          @PathVariable Long userId,
                                          @AuthenticationPrincipal UserPrincipal principal) {
         accessService.requireSellerOwnerAccess(sellerId, principal);
@@ -35,5 +36,15 @@ public class SellerStaffController {
         accessService.requireSellerOwnerAccess(sellerId, principal);
 
         return sellerStaffService.getAllActiveStaffBySellerId(sellerId);
+    }
+
+    @DeleteMapping("/user/{userId}") // OWNER
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteStaff(@PathVariable Long sellerId,
+                                         @PathVariable Long userId,
+                                         @AuthenticationPrincipal UserPrincipal principal) {
+        accessService.requireSellerOwnerAccess(sellerId, principal);
+
+        sellerStaffService.deleteStaff(sellerId, userId);
     }
 }

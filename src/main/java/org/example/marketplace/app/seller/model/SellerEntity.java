@@ -2,11 +2,13 @@ package org.example.marketplace.app.seller.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.example.marketplace.app.seller.staff.model.SellerStaffEntity;
 import org.example.marketplace.app.users.model.UserEntity;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.Instant;
+import java.util.List;
 
 @Entity
 @Getter
@@ -46,6 +48,9 @@ public class SellerEntity {
     @Setter
     @Column(name = "deleted_at")
     private Instant deletedAt;
+
+    @OneToMany(mappedBy = "seller")
+    private List<SellerStaffEntity> staff;
 
      public SellerEntity(String name, String slug, UserEntity owner) {
         this.name = name;
